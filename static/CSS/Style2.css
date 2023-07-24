@@ -1,0 +1,22 @@
+/*Success and Failure pages style*/
+/* html,body{
+  height: 100%;
+} */
+.contain{
+  width: 100%;
+  height: 250px;
+  background-color: gainsboro;
+}
+.content{
+  margin: 50px 0 0 200px;
+}
+h1{
+  padding-top: 20px;
+  font-size: 3rem;
+}
+p{
+  font-size: 2rem;
+}
+button{
+  margin: 10px 200px 0;
+}
