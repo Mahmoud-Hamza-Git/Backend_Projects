@@ -1,8 +1,8 @@
 const express = require('express');
 const bodyParser = require('body-parser');
-// const repuest = require("request");
 const https = require('https');
 const path = require('path');
+require('dotenv').config();
 // const { redirect } = require("express/lib/response");
 const app = express();
 
@@ -14,11 +14,8 @@ app.get('/', function (req, res) {
 });
 
 app.post('/', function (req, res) {
-  // getting the data from the body object with two methods.
+  // getting the data from the body object
   const { fname, lname, email } = req.body;
-  /*const fname = req.body.fname;
-     const lname = req.body.lname;
-     const email = req.body.email;*/
 
   // construct the JSON object that we want to send(search in the API documentation about add members(contacts) to an audience(list))
   const dataObject = {
@@ -31,12 +28,12 @@ app.post('/', function (req, res) {
   }; // if you want to send more than one contact(member) you can constract the (members:[]) list then add all members objects you want(notice that we also need to remove /members section in the API end point ).
 
   // stringify the JSON Data.
-  const postData = JSON.stringify(dataObject);
+  const dataString = JSON.stringify(dataObject);
   // construct the https request parameters.
   const url = 'https://us14.api.mailchimp.com/3.0/lists/e6f56b61ed/members';
   const options = {
     method: 'POST',
-    auth: 'hamza:6bb1049773d843892e573dfbcb9a4c18-us14',
+    auth: `hamza:${process.env.key}`,
   };
   const request = https.request(url, options, function (response) {
     if (response.statusCode != 200) {
@@ -44,12 +41,12 @@ app.post('/', function (req, res) {
     } else {
       res.redirect('/success.html');
     }
-    response.on('data', function (d) {
-      console.log(JSON.parse(d));
+    response.on('data', function (data) {
+      console.log(JSON.parse(data));
       console.log(response.statusCode);
     });
   });
-  request.write(postData);
+  request.write(dataString);
   request.end();
 });
 
