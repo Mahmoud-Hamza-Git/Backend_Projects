@@ -18,11 +18,13 @@ addSeedings();
 MyControllers.startConsumingMessages();
 
 const app = express();
-app.use(
-  cors({
-    origin: '*',
-  })
-);
+
+// app.use(
+//   cors({
+//     origin: '*',
+//   })
+// );
+
 app.use(express.static('public'));
 app.use(express.json()); // to accept JSON data from frontend
 
