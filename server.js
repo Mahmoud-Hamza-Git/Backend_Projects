@@ -11,13 +11,18 @@ const notificationRoutes = require('./routes/notificationRoutes');
 const MyControllers = require('./utils/consumer');
 const addSeedings = require('./utils/scriptAddSeedings');
 const { notFound, errorHandler } = require('./middleware/errorMiddleware');
+const cors = require('cors');
 
 connectDB();
 addSeedings();
 MyControllers.startConsumingMessages();
 
 const app = express();
-
+app.use(
+  cors({
+    origin: '*',
+  })
+);
 app.use(express.static('public'));
 app.use(express.json()); // to accept JSON data from frontend
 
